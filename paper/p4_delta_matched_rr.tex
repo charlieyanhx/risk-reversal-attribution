@@ -143,10 +143,12 @@ $n$ is even and the wings share $(S, \tau)$,
  \qquad\blacksquare \]
 The skew breaks the reflection at second order ($\sigma_p > \sigma_c$ puts the put wing
 further out), leaving a small residual imbalance. Empirically the wing vegas are 23.0 and 25.0
-(dollars per volatility point per contract): the net-vega residual is 29\% of the differential
-per unit innovation, and because level innovations are only weakly signed relative to the fade,
-its \emph{signed} P\&L contribution is $-19\%$ of net---opposite-signed and one-seventh the
-slope bucket's magnitude. \emph{The delta-matched risk reversal prices the skew, not the
+(dollars per volatility point per contract, at sample-mean position Greeks), so
+$|\mathcal V_{\mathrm{net}}| = 2.0$ against $\mathcal V_{\mathrm{diff}} = 48.0$: the surviving
+level exposure is 4.2\% of the differential, or 8.3\% of the slope bucket's coefficient
+$\tfrac12\mathcal V_{\mathrm{diff}}$. Because level innovations are in addition only weakly
+signed relative to the fade, the level bucket's \emph{signed} P\&L contribution is $-19\%$ of
+net---opposite-signed and one-seventh the slope bucket's magnitude. \emph{The delta-matched risk reversal prices the skew, not the
 level.}
 
 \section{Proposition 2: vanna is irreducible inside the structure}
@@ -161,8 +163,8 @@ hence $d_2^c < 0$ and $\Va_c > 0$. Re-weighting to $(q_p, q_c) = (s\,n_p, -s\,n_
 $n_p, n_c > 0$ gives $\Va_{\mathrm{net}} = s(n_p \Va_p - n_c \Va_c)$; setting it to zero
 requires $n_p / n_c = \Va_c / \Va_p < 0$, impossible. $\blacksquare$
 
-Empirically $\Va_p = -0.756$, $\Va_c = +1.560$, and
-$|\Va_{\mathrm{net}}| / |\Va_{\mathrm{diff}}| = 2.60$: because the signs oppose, the
+Empirically $\Va_p = -0.756$ and $\Va_c = +1.560$ at sample-mean position Greeks, giving
+$|\Va_{\mathrm{net}}| / |\Va_{\mathrm{diff}}| = 2.316/0.804 = 2.88$: because the signs oppose, the
 \emph{imbalance} dominates the \emph{sum}---the exact opposite of the vega pattern of
 Proposition~1, and the reason the structure cannot escape its spot-volatility coupling by
 rebalancing. Any vanna neutralization requires legs from \emph{outside} the structure
