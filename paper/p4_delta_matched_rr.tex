@@ -29,9 +29,10 @@ the standard account of its P\&L runs through vanna: the position is said to pro
 covariation of spot and volatility. We show, by derivation and by a Greek attribution that
 reconciles to the measured P\&L of an 886-trade tape, that this account has the mechanism
 backwards. Five results characterize the structure. (1) Delta-matching makes the two wing
-vegas equal in the flat-smile limit, so net (level) vega is approximately zero: the position is
-a nearly pure \emph{differential}-vega instrument---it prices the skew slope, not the
-volatility level. (2) The two wing vannas have \emph{opposite signs}, so net vanna cannot be
+vegas equal \emph{exactly, and at any level of skew}---volatility enters vega only through
+$d_1$, which matching delta pins---so net (level) vega is zero up to the granularity with which
+delta can be matched in practice: the position is a nearly pure \emph{differential}-vega
+instrument, and it prices the skew slope, not the volatility level. (2) The two wing vannas have \emph{opposite signs}, so net vanna cannot be
 zeroed by any positive re-weighting of the two legs: vanna exposure is irreducible inside the
 structure. (3) If the skew mean-reverts (Ornstein--Uhlenbeck), the expected P\&L of a fade is
 $\tfrac12\,\overline{\mathcal V}_{\mathrm{diff}}\,\theta\,\mathrm{MAD}(\kappa)$---reversion
@@ -132,7 +133,7 @@ fitted.
 
 \section{Proposition 1: delta-matching suppresses level exposure}
 \begin{prop}[Slope dominance]
-In the flat-smile limit, a delta-matched risk reversal has zero net vega.
+A delta-matched risk reversal has zero net vega---exactly, and for any smile.
 \end{prop}
 \emph{Proof.} Delta-matching means $-\Delta_p = \Delta_c = \delta_0$, i.e.
 $N(-d_1^p) = N(d_1^c) = \delta_0 e^{q\tau}$, so $-d_1^p = d_1^c \equiv d^\star =
@@ -141,14 +142,26 @@ $n$ is even and the wings share $(S, \tau)$,
 \[ \mathcal V_p = S e^{-q\tau}\sqrt{\tau}\, n(-d^\star) = S e^{-q\tau}\sqrt{\tau}\, n(d^\star)
  = \mathcal V_c \ \Rightarrow\ \mathcal V_{\mathrm{net}} = s(\mathcal V_p - \mathcal V_c) = 0.
  \qquad\blacksquare \]
-The skew breaks the reflection at second order ($\sigma_p > \sigma_c$ puts the put wing
-further out), leaving a small residual imbalance. Empirically the wing vegas are 23.0 and 25.0
-(dollars per volatility point per contract, at sample-mean position Greeks), so
-$|\mathcal V_{\mathrm{net}}| = 2.0$ against $\mathcal V_{\mathrm{diff}} = 48.0$: the surviving
-level exposure is 4.2\% of the differential, or 8.3\% of the slope bucket's coefficient
-$\tfrac12\mathcal V_{\mathrm{diff}}$. Because level innovations are in addition only weakly
-signed relative to the fade, the level bucket's \emph{signed} P\&L contribution is $-19\%$ of
-net---opposite-signed and one-seventh the slope bucket's magnitude. \emph{The delta-matched risk reversal prices the skew, not the
+Note what the proof does \emph{not} use. Volatility enters vega only through $d_1$, and
+matching delta pins $d_1$ irrespective of $\sigma$: from $\Delta_c = e^{-q\tau}N(d_1)$ we get
+$d_1 = N^{-1}(\delta_0 e^{q\tau})$ with no $\sigma$ in it. The cancellation is therefore exact
+at every level of skew, not an approximation that a flat smile makes available---we verify
+numerically that net vega is zero to machine precision for $(\sigma_p, \sigma_c)$ ranging from
+$(0.20, 0.20)$ to $(0.60, 0.12)$. An earlier draft of this paper attributed the small empirical
+residual to the skew ``breaking the reflection at second order''; that cannot be the mechanism,
+because the skew has no channel through which to act.
+
+The residual is instead an artefact of how exactly delta can be matched in practice. Two mundane
+sources reproduce its size: strike discreteness (landing at $0.11$ against $0.10$ delta gives a
+net of 3.4\% of the differential) and tenor mismatch between the wings (33 against 30 days gives
+2.4\%). Measured across the 10-delta, 25--45-day belt the residual is 3.5\% of the differential
+($\mathcal V_p = 24.3$, $\mathcal V_c = 22.7$ dollars per volatility point per contract), and
+\emph{its sign is not stable across specifications}---our traded tape has the call wing larger,
+the belt has the put wing larger---which is what one expects of a matching artefact and not of a
+structural effect. The economically relevant statement survives all of this untouched, because it
+rests on the P\&L rather than on the exposure: level innovations are only weakly signed relative
+to the fade, and the level bucket's \emph{signed} contribution is $-19\%$ of net---opposite-signed
+and one-seventh the slope bucket's magnitude. \emph{The delta-matched risk reversal prices the skew, not the
 level.}
 
 \section{Proposition 2: vanna is irreducible inside the structure}
