@@ -15,6 +15,13 @@ A delta-matched risk reversal is a near-pure differential-vega instrument carryi
 
 **PARTIALLY RUNNABLE — the bootstrap needs the persisted daily bucket series (not shipped; derived from licensed data).** The script is published so the interval construction is auditable: block bootstrap, 5,000 draws, 21-trading-day blocks.
 
+Every script in `code/` imports against a clean environment. Two further analyses exist in the
+private program — a direction-split of the Greek buckets, and a costed vanna-hedge design sweep —
+and are deliberately **not** shipped: both depend on a private data-access layer and on the
+operating parameters the paper withholds, so publishing them would mean either shipping code that
+cannot import or disclosing what the paper does not. Their results are in the paper; a synthetic
+reproduction is the honest way to publish the method, and is not written yet.
+
 **Operating parameters of the studied strategy are deliberately withheld** (entry bands, holding and exit rules, sizing). The structure and its Greek attribution are published; the trading rules are not.
 
 ## What is here
